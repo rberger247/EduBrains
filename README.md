@@ -3,5 +3,5 @@
 
 ### Adding facebook login
 ```
-navigate to facebook [developer tutorial](https://developers.facebook.com/docs/apps/register)
+navigate to facebook (developer tutorial)[https://developers.facebook.com/docs/apps/register]
 ```
