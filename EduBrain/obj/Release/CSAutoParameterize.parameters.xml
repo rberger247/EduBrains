@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IdentityDbContext-Web.config Connection String" description="IdentityDbContext Connection String used in web.config by the application to access the database." defaultValue="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=C:\Users\Rafib\EduSmart_db.Mdf;&#xD;&#xA;         Initial Catalog=EduSmart_db;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Rafib\\onedrive\\documents\\visual\ studio\ 2015\\Projects\\EduBrainSln\\EduBrain\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='IdentityDbContext']/@connectionString" />
+  </parameter>
+  <parameter name="EduSmart_dbEntities-Web.config Connection String" description="EduSmart_dbEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.SchoolEntities.csdl|res://*/Models.SchoolEntities.ssdl|res://*/Models.SchoolEntities.msl;&#xD;&#xA;         provider=System.Data.SqlClient;provider connection string=&quot;&#xD;&#xA;      data source=(LocalDb)\MSSQLLocalDB;initial catalog=EduSmart_db;AttachDbFilename=C:\Users\Rafib\EduSmart_db.Mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;&#xD;&#xA;      " tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Rafib\\onedrive\\documents\\visual\ studio\ 2015\\Projects\\EduBrainSln\\EduBrain\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='EduSmart_dbEntities']/@connectionString" />
+  </parameter>
+</parameters>
