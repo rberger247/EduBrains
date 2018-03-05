@@ -56,7 +56,7 @@ namespace EduBrain
 
             app.UseFacebookAuthentication(
                appId: "1897671550563705",
-               appSecret: "");
+               appSecret: "1da5d6672a7997bd4c444018136f8743");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
