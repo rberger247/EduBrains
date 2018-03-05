@@ -15,3 +15,12 @@ and [here](https://developers.facebook.com/)
 ### Adding Paypal 
 
 * Add nuget package called Paypal
+* add to webConfig
+
+  <paypal>
+    <settings>
+      <add name="mode" value="sandbox" />
+      <add name="clientId" value="" />
+      <add name="clientSecret" value="" />
+    </settings>
+  </paypal>
