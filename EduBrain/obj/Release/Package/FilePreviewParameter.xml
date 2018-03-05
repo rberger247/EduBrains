@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="EduBrainz" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Rafib\\onedrive\\documents\\visual\ studio\ 2015\\Projects\\EduBrainSln\\EduBrain\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Rafib\\onedrive\\documents\\visual\ studio\ 2015\\Projects\\EduBrainSln\\EduBrain\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="EduSmart_dbEntities-Web.config Connection String" description="" value="metadata=res://*/Models.SchoolEntities.csdl|res://*/Models.SchoolEntities.ssdl|res://*/Models.SchoolEntities.msl;provider=System.Data.SqlClient;provider connection string=&quot;Server=tcp:edusmartey.database.windows.net,1433;Initial Catalog=EduBrainz;Persist Security Info=False;User ID={your_username};Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Rafib\\onedrive\\documents\\visual\ studio\ 2015\\Projects\\EduBrainSln\\EduBrain\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='EduSmart_dbEntities']/@connectionString" />
+  </parameter>
+  <parameter name="IdentityDbContext-Web.config Connection String" description="" value="Server=tcp:edusmartey.database.windows.net,1433;Initial Catalog=EduBrainz;Persist Security Info=False;User ID={your_username};Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Rafib\\onedrive\\documents\\visual\ studio\ 2015\\Projects\\EduBrainSln\\EduBrain\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='IdentityDbContext']/@connectionString" />
+  </parameter>
+</parameters>
