@@ -16,6 +16,7 @@ and [here](https://developers.facebook.com/)
 
 * Add nuget package called Paypal
 * add to webConfig
+```
 
   <paypal>
     <settings>
@@ -24,3 +25,5 @@ and [here](https://developers.facebook.com/)
       <add name="clientSecret" value="" />
     </settings>
   </paypal>
+  
+  ```
