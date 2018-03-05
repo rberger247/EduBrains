@@ -98,7 +98,7 @@ namespace BeerPal.Controllers
                 var createdPayment = payment.Create(apiContext);
 
                 // Save a reference to the paypal payment
-                ticket.PayPalReference = createdPayment.id;
+                reciept.PayPalReference = createdPayment.id;
                 _dbContext.SaveChanges();
 
                 // Find the Approval URL to send our user to
