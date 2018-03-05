@@ -98,5 +98,28 @@
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
+    <EntitySet Name="Students" EntityType="EduSmart_dbModel.Student" />
+    <EntitySet Name="Reciepts" EntityType="EduSmart_dbModel.Reciept" />
   </EntityContainer>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ParentId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Reciept">
+    <Key>
+      <PropertyRef Name="PaymentId" />
+    </Key>
+    <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PayPalReference" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

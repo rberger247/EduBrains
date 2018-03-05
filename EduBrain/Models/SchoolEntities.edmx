@@ -56,6 +56,18 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="Reciept">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="PaymentDate" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PayPalReference" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Students">
           <Key>
             <PropertyRef Name="StudentId" />
@@ -127,6 +139,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reciept" EntityType="Self.Reciept" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -248,6 +261,7 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <EntitySet Name="Students" EntityType="EduSmart_dbModel.Student" />
+          <EntitySet Name="Reciepts" EntityType="EduSmart_dbModel.Reciept" />
         </EntityContainer>
         <EntityType Name="Student">
           <Key>
@@ -257,6 +271,18 @@
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ParentId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Reciept">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PayPalReference" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -324,6 +350,19 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reciepts">
+            <EntityTypeMapping TypeName="EduSmart_dbModel.Reciept">
+              <MappingFragment StoreEntitySet="Reciept">
+                <ScalarProperty Name="PayPalReference" ColumnName="PayPalReference" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -54,5 +54,28 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="EduSmart_dbModel.Student">
+        <MappingFragment StoreEntitySet="Students">
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reciepts">
+      <EntityTypeMapping TypeName="EduSmart_dbModel.Reciept">
+        <MappingFragment StoreEntitySet="Reciept">
+          <ScalarProperty Name="PayPalReference" ColumnName="PayPalReference" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
