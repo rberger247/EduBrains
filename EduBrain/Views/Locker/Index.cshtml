@@ -59,7 +59,10 @@
                     columns: [
                         {
                             data: "LockerNumber"
-                        }
+                        },
+                         {
+                             data: "StudentId"
+                         }
                     ]
                 });
                 var table = $("#LockerTable").DataTable({
@@ -79,13 +82,17 @@
             });
             $('#availableLocker').click(function () {
                 if (!this.checked)
-                    $("#AvailableLockerTable").hide(),
-                $('#LockerTable').show();
+                    $("#AvailableLockerTable_wrapper").hide(),
+                         $("#LockerTable_wrapper").hide(),
+                           $("#LockerTable_wrapper").show()
+                   
+                //$('#LockerTable').show();
      
                else
-
-              $("#AvailableLockerTable").show(),           
-                $('#LockerTable').hide();
+                    $("#AvailableLockerTable_wrapper").show(),
+                           $("#LockerTable_wrapper").hide(),
+              $("#AvailableLockerTable").show()          
+              //  $('#LockerTable').hide();
                 //this.checked ? ( $("#AvailableLockerTable").hide()) : $('#Locker').hide(100); $("#AvailableLockerTable").show(100); //time for show
             });
         </script>
