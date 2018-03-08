@@ -18,6 +18,7 @@ namespace EduBrain.Models
         public EduSmart_dbEntities()
             : base("name=EduSmart_dbEntities")
         {
+            base.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -25,12 +26,13 @@ namespace EduBrain.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Reciept> Reciepts { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Locker> Lockers { get; set; }
+        public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
     }
 }

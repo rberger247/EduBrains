@@ -9,26 +9,45 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using EduBrain.Models;
+using AutoMapper;
+using EduBrain.ViewModels;
 
 namespace EduBrain.Controllers.Api
 {
     [RoutePrefix("api/Lockers")]
     public class LockersController : ApiController
     {
-        private EduSmart_dbEntities db = new EduSmart_dbEntities();
+        private EduSmart_dbEntities db = new EduSmart_dbEntities(
+            
+            );
 
         // GET: api/Lockers
-        public IQueryable<Locker> GetLockers()
+        public IHttpActionResult GetLockers()
         {
-            return db.Lockers;
+            var allLockers = db.Lockers.Include(s => s.Student);
+                
+                var allLockersDto = allLockers
+                .ToList()
+                .Select(Mapper.Map<Locker, LockerVm>);
+
+            return Ok(allLockersDto);
         }
 
 
         [Route("availableLocker")]
         [HttpGet]
-        public IQueryable<Locker> GetAvailableLockers()
+        public IHttpActionResult  GetAvailableLockers()
         {
-            return db.Lockers.Where(l => l.StudentId == null ||  l.StudentId == 0);
+
+            // Get Related Object
+            var availableLockers = db.Lockers.Where(l => l.StudentId == null || l.StudentId == 0).Include(s => s.Student);
+
+            var availableLockerDto = availableLockers
+                .ToList()
+                .Select(Mapper.Map<Locker, LockerVm>);
+
+            return Ok(availableLockerDto);
+   
         }
 
         // GET: api/Lockers/5

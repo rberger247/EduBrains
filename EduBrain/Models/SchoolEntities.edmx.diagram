@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e9969749f6dd4968b68c689f86341b99" Name="Diagram1">
-        <EntityTypeShape EntityType="EduSmart_dbModel.Student" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="EduSmart_dbModel.Reciept" Width="1.5" PointX="3.375" PointY="6.75" />
         <EntityTypeShape EntityType="EduSmart_dbModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" />
         <EntityTypeShape EntityType="EduSmart_dbModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" />
@@ -15,6 +14,10 @@
         <AssociationConnector Association="EduSmart_dbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="EduSmart_dbModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="EduSmart_dbModel.Locker" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.Person" Width="1.5" PointX="7.375" PointY="0.75" />
+        <AssociationConnector Association="EduSmart_dbModel.FK_Locker_Locker" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.Student" Width="1.5" PointX="3.125" PointY="10" />
+        <AssociationConnector Association="EduSmart_dbModel.FK_Locker_Student" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

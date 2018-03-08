@@ -20,5 +20,9 @@ namespace EduBrain.Models
         public System.DateTime DateAssigned { get; set; }
         public string Location { get; set; }
         public string CombinationNumber { get; set; }
+    
+        public virtual Locker Locker1 { get; set; }
+        public virtual Locker Locker2 { get; set; }
+        public virtual Student Student { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="EduSmart_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="EduSmart_dbEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Students" EntityType="EduSmart_dbModel.Student" />
     <EntitySet Name="Reciepts" EntityType="EduSmart_dbModel.Reciept" />
     <EntitySet Name="AspNetRoles" EntityType="EduSmart_dbModel.AspNetRole" />
     <EntitySet Name="AspNetUserClaims" EntityType="EduSmart_dbModel.AspNetUserClaim" />
@@ -20,16 +19,17 @@
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
     </AssociationSet>
     <EntitySet Name="Lockers" EntityType="EduSmart_dbModel.Locker" />
+    <EntitySet Name="People" EntityType="EduSmart_dbModel.Person" />
+    <AssociationSet Name="FK_Locker_Locker" Association="EduSmart_dbModel.FK_Locker_Locker">
+      <End Role="Locker" EntitySet="Lockers" />
+      <End Role="Locker1" EntitySet="Lockers" />
+    </AssociationSet>
+    <EntitySet Name="Students" EntityType="EduSmart_dbModel.Student" />
+    <AssociationSet Name="FK_Locker_Student" Association="EduSmart_dbModel.FK_Locker_Student">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Locker" EntitySet="Lockers" />
+    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="Student">
-    <Key>
-      <PropertyRef Name="StudentId" />
-    </Key>
-    <Property Name="StudentId" Type="Int32" Nullable="false" />
-    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ParentId" Type="Int32" />
-  </EntityType>
   <EntityType Name="Reciept">
     <Key>
       <PropertyRef Name="PaymentId" />
@@ -133,5 +133,52 @@
     <Property Name="DateAssigned" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="CombinationNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Locker1" Relationship="EduSmart_dbModel.FK_Locker_Locker" FromRole="Locker" ToRole="Locker1" />
+    <NavigationProperty Name="Locker2" Relationship="EduSmart_dbModel.FK_Locker_Locker" FromRole="Locker1" ToRole="Locker" />
+    <NavigationProperty Name="Student" Relationship="EduSmart_dbModel.FK_Locker_Student" FromRole="Locker" ToRole="Student" />
   </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="PersonId" />
+    </Key>
+    <Property Name="PersonId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <Association Name="FK_Locker_Locker">
+    <End Type="EduSmart_dbModel.Locker" Role="Locker" Multiplicity="1" />
+    <End Type="EduSmart_dbModel.Locker" Role="Locker1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Locker">
+        <PropertyRef Name="LockerId" />
+      </Principal>
+      <Dependent Role="Locker1">
+        <PropertyRef Name="LockerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FamilyId" Type="Int32" />
+    <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Lockers" Relationship="EduSmart_dbModel.FK_Locker_Student" FromRole="Student" ToRole="Locker" />
+  </EntityType>
+  <Association Name="FK_Locker_Student">
+    <End Type="EduSmart_dbModel.Student" Role="Student" Multiplicity="0..1" />
+    <End Type="EduSmart_dbModel.Locker" Role="Locker" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="Locker">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

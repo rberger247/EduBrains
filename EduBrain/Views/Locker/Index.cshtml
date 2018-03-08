@@ -27,7 +27,7 @@
     <thead>
         <tr>      
             <th>Locker Number</th>
-            <th>Student Id</th>
+            <th>Student Name</th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -38,7 +38,7 @@
             <thead>
                 <tr>
                     <th> Locker Number</th>
-                    <th> StudentId  </th>        
+                    <th> Student Name </th>        
                 </tr>
             </thead>
             <tbody></tbody>
@@ -50,32 +50,43 @@
         @Scripts.Render("~/bundles/jqueryval")
         <script>
             $(document).ready(function () {
-                $("#AvailableLockerTable").hide();
+             
+                $("#AvailableLockerTable").hide();              
                    var table = $("#AvailableLockerTable").DataTable({
                     ajax: {
                         url: "/api/lockers/availableLocker",
-                        dataSrc: ""
+                        dataSrc: "",
+                        "data" : null
                     },
                     columns: [
+     
                         {
-                            data: "LockerNumber"
+                            "data": "lockerNumber",
+                        
+                          
                         },
+                       
                          {
-                             data: "StudentId"
+                             "data": "student.firstName",
+                                "defaultContent": ""
                          }
                     ]
-                });
+                   });
+                   $("#AvailableLockerTable_wrapper").hide();
+
                 var table = $("#LockerTable").DataTable({
                     ajax: {
                         url: "/api/lockers",
-                        dataSrc: ""
+                        dataSrc: "",
+                        "data": null
                            },
                     columns: [
                         {
-                            data: "LockerNumber"
+                            data: "lockerNumber"
                         },
                         {
-                            data: "StudentId"
+                            data: "student.firstName",
+                            "defaultContent": ""
                         }
                     ]
                 });
@@ -84,16 +95,11 @@
                 if (!this.checked)
                     $("#AvailableLockerTable_wrapper").hide(),
                          $("#LockerTable_wrapper").hide(),
-                           $("#LockerTable_wrapper").show()
-                   
-                //$('#LockerTable').show();
-     
+                           $("#LockerTable_wrapper").show()    
                else
                     $("#AvailableLockerTable_wrapper").show(),
                            $("#LockerTable_wrapper").hide(),
-              $("#AvailableLockerTable").show()          
-              //  $('#LockerTable').hide();
-                //this.checked ? ( $("#AvailableLockerTable").hide()) : $('#Locker').hide(100); $("#AvailableLockerTable").show(100); //time for show
+              $("#AvailableLockerTable").show()                    
             });
         </script>
 

@@ -14,9 +14,19 @@ namespace EduBrain.Models
     
     public partial class Student
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Student()
+        {
+            this.Lockers = new HashSet<Locker>();
+        }
+    
         public int StudentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Nullable<int> ParentId { get; set; }
+        public Nullable<int> FamilyId { get; set; }
+        public Nullable<System.DateTime> EnrollmentDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Locker> Lockers { get; set; }
     }
 }
