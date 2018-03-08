@@ -1,0 +1,106 @@
+﻿@model IEnumerable<EduBrain.Models.Locker>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+ @Html.Label("availableLocker", "Only Available Lockers")
+ @Html.CheckBox("availableLocker")
+@using (Html.BeginForm())
+{
+<p>
+    Find by name: @Html.TextBox("SearchString")
+    <input type="submit" value="Search" />
+</p>
+
+}
+
+
+<div id="TableContainer">
+
+<table id="LockerTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>      
+            <th>Locker Number</th>
+            <th>Student Name</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+  
+    <div id="available-container">
+        <table id="AvailableLockerTable" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th> Locker Number</th>
+                    <th> Student Name </th>        
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    </div>
+    @section scripts
+{
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $(document).ready(function () {
+             
+                $("#AvailableLockerTable").hide();              
+                   var table = $("#AvailableLockerTable").DataTable({
+                    ajax: {
+                        url: "/api/lockers/availableLocker",
+                        dataSrc: "",
+                        "data" : null
+                    },
+                    columns: [
+     
+                        {
+                            "data": "lockerNumber",
+                        
+                          
+                        },
+                       
+                         {
+                             "data": "student.firstName",
+                                "defaultContent": ""
+                         }
+                    ]
+                   });
+                   $("#AvailableLockerTable_wrapper").hide();
+
+                var table = $("#LockerTable").DataTable({
+                    ajax: {
+                        url: "/api/lockers",
+                        dataSrc: "",
+                        "data": null
+                           },
+                    columns: [
+                        {
+                            data: "lockerNumber"
+                        },
+                        {
+                            data: "student.firstName",
+                            "defaultContent": ""
+                        }
+                    ]
+                });
+            });
+            $('#availableLocker').click(function () {
+                if (!this.checked)
+                    $("#AvailableLockerTable_wrapper").hide(),
+                         $("#LockerTable_wrapper").hide(),
+                           $("#LockerTable_wrapper").show()    
+               else
+                    $("#AvailableLockerTable_wrapper").show(),
+                           $("#LockerTable_wrapper").hide(),
+              $("#AvailableLockerTable").show()                    
+            });
+        </script>
+
+    }

@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using EduBrain.Models;
 
 namespace EduBrain.Models
 {
@@ -18,16 +19,17 @@ namespace EduBrain.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class IdentityDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
+
+        public IdentityDbContext()
             : base("IdentityDbContext", throwIfV1Schema: false)
         {
         }
 
-        public static ApplicationDbContext Create()
+        public static IdentityDbContext Create()
         {
-            return new ApplicationDbContext();
+            return new IdentityDbContext();
         }
     }
 }
