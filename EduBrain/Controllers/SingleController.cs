@@ -14,9 +14,9 @@ namespace BeerPal.Controllers
 {
     public class SingleController : Controller
     {
-      private SchoolEntities _dbContext => HttpContext.GetOwinContext().Get<SchoolEntities>();
+      //private SchoolEntities _dbContext => HttpContext.GetOwinContext().Get<SchoolEntities>();
         
-        SchoolEntities schoolEntities = new SchoolEntities();
+     EduSmart_dbEntities schoolEntities = new EduSmart_dbEntities();
         public ActionResult Index()
         {
             var model = RegisterChild();
@@ -42,7 +42,7 @@ namespace BeerPal.Controllers
                     PaymentDate = registerInfo.RegisterDate
                 };
              schoolEntities.Reciepts.Add(reciept);
-                _dbContext.SaveChanges();
+                schoolEntities.SaveChanges();
 
 
                 // Get PayPal API Context using configuration from web.config
@@ -99,7 +99,7 @@ namespace BeerPal.Controllers
 
                 // Save a reference to the paypal payment
                 reciept.PayPalReference = createdPayment.id;
-                _dbContext.SaveChanges();
+                schoolEntities.SaveChanges();
 
                 // Find the Approval URL to send our user to
                 var approvalUrl =
@@ -116,7 +116,7 @@ namespace BeerPal.Controllers
         public ActionResult Return(string payerId, string paymentId)
         {
             // Fetch the existing ticket
-            var ticket = _dbContext.Reciepts.FirstOrDefault(x => x.PayPalReference == paymentId);
+            var ticket = schoolEntities.Reciepts.FirstOrDefault(x => x.PayPalReference == paymentId);
 
             // Get PayPal API Context using configuration from web.config
             var apiContext = GetApiContext();
@@ -154,7 +154,7 @@ namespace BeerPal.Controllers
             return new IndexVm()
             {
                 // Always set tour for tomorrow
-                RegisterDate = DateTime.Today.AddDays(1),
+                RegisterDate = DateTime.Today,
                 // Represent price in cents to avoid rounding errors
                 Price = 2000
             };

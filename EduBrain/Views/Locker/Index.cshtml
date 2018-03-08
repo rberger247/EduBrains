@@ -1,0 +1,93 @@
+﻿@model IEnumerable<EduBrain.Models.Locker>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+ @Html.Label("availableLocker", "Only Available Lockers")
+ @Html.CheckBox("availableLocker")
+@using (Html.BeginForm())
+{
+<p>
+    Find by name: @Html.TextBox("SearchString")
+    <input type="submit" value="Search" />
+</p>
+
+}
+
+
+<div id="TableContainer">
+
+<table id="LockerTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>      
+            <th>Locker Number</th>
+            <th>Student Id</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+  
+    <div id="available-container">
+        <table id="AvailableLockerTable" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th> Locker Number</th>
+                    <th> StudentId  </th>        
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    </div>
+    @section scripts
+{
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $(document).ready(function () {
+                $("#AvailableLockerTable").hide();
+                   var table = $("#AvailableLockerTable").DataTable({
+                    ajax: {
+                        url: "/api/lockers/availableLocker",
+                        dataSrc: ""
+                    },
+                    columns: [
+                        {
+                            data: "LockerNumber"
+                        }
+                    ]
+                });
+                var table = $("#LockerTable").DataTable({
+                    ajax: {
+                        url: "/api/lockers",
+                        dataSrc: ""
+                           },
+                    columns: [
+                        {
+                            data: "LockerNumber"
+                        },
+                        {
+                            data: "StudentId"
+                        }
+                    ]
+                });
+            });
+            $('#availableLocker').click(function () {
+                if (!this.checked)
+                    $("#AvailableLockerTable").hide(),
+                $('#LockerTable').show();
+     
+               else
+
+              $("#AvailableLockerTable").show(),           
+                $('#LockerTable').hide();
+                //this.checked ? ( $("#AvailableLockerTable").hide()) : $('#Locker').hide(100); $("#AvailableLockerTable").show(100); //time for show
+            });
+        </script>
+
+    }

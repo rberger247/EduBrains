@@ -122,3 +122,4 @@ C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBra
 C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\bin\roslyn\System.Xml.XPath.XDocument.dll
 C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\bin\roslyn\vbc.exe.config
 C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\bin\roslyn\vbc.rsp
+C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\obj\Debug\EduBrain.csprojResolveAssemblyReference.cache

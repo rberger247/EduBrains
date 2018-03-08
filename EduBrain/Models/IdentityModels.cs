@@ -19,19 +19,17 @@ namespace EduBrain.Models
         }
     }
 
-    public class SchoolEntities : IdentityDbContext<ApplicationUser>
+    public class IdentityDbContext : IdentityDbContext<ApplicationUser>
     {
 
-        public DbSet<Reciept> Reciepts { get; set; }
-
-        public SchoolEntities()
+        public IdentityDbContext()
             : base("IdentityDbContext", throwIfV1Schema: false)
         {
         }
 
-        public static SchoolEntities Create()
+        public static IdentityDbContext Create()
         {
-            return new SchoolEntities();
+            return new IdentityDbContext();
         }
     }
 }
