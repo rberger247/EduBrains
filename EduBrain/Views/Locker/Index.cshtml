@@ -19,26 +19,40 @@
 </p>
 
 }
-
-
 <div id="TableContainer">
 
 <table id="LockerTable" class="table table-bordered table-hover">
     <thead>
         <tr>      
             <th>Locker Number</th>
-            <th>Student Name</th>
+            <th>location </th>
+            <th> Student  </th> 
         </tr>
     </thead>
     <tbody></tbody>
 </table>
-  
+    @*<table id="example" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Locker Number</th>
+                <th>location </th>
+                <th> Student  </th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>*@
+
+
+
+
     <div id="available-container">
         <table id="AvailableLockerTable" class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th> Locker Number</th>
-                    <th> Student Name </th>        
+                    <th> Student Name </th> 
+                    <th> Student  </th> 
+                           
                 </tr>
             </thead>
             <tbody></tbody>
@@ -49,27 +63,34 @@
 {
         @Scripts.Render("~/bundles/jqueryval")
         <script>
+
+
             $(document).ready(function () {
              
-                $("#AvailableLockerTable").hide();              
+                $("#AvailableLockerTable").hide();
+    
+
+
+
                    var table = $("#AvailableLockerTable").DataTable({
                     ajax: {
                         url: "/api/lockers/availableLocker",
                         dataSrc: "",
                         "data" : null
                     },
-                    columns: [
-     
+                    columns: [ 
                         {
-                            "data": "lockerNumber",
-                        
-                          
+                            "data": "lockerNumber"                        
                         },
+                         {
+                             "data": "location"
+                         },
                        
                          {
                              "data": "student.firstName",
-                                "defaultContent": ""
+                             "defaultContent": "Not Assigned Yet"
                          }
+
                     ]
                    });
                    $("#AvailableLockerTable_wrapper").hide();
@@ -84,13 +105,19 @@
                         {
                             data: "lockerNumber"
                         },
+                          {
+                              data: "location"
+                          },
                         {
-                            data: "student.firstName",
+                            "data": "student.firstName",
                             "defaultContent": ""
                         }
                     ]
                 });
             });
+
+
+
             $('#availableLocker').click(function () {
                 if (!this.checked)
                     $("#AvailableLockerTable_wrapper").hide(),

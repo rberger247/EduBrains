@@ -61,6 +61,12 @@ namespace EduBrain.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult Application()
+        {
+          
+            return View();
+        }
         //
         // POST: /Account/Login
         [HttpPost]

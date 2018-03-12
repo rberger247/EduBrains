@@ -20,9 +20,9 @@
             <div class="col-md-12">
                 @using (Html.BeginForm("Index", "Single", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
-                    <h3 class="text-center">Ticket for @Model.RegisterDate.ToString("dddd, dd MMMM yyyy")</h3>
+                    <h3 class="text-center"> Register for @Model.RegisterDate.ToString("yyyy")</h3>
                     <hr>
-                    <div class="form-group">
+                    <div class="form-group center">
                         <label class="col-sm-3 control-label">First Name</label>
                         <div class="col-sm-4">
                             @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
@@ -54,7 +54,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-10">
-                            <button type="submit" class="btn btn-warning">Pay $@((Model.Price / 100M).ToString("0.00")) with PayPal</button>
+                            <button type="submit" class="btn btn-warning">Pay with PayPal</button>
                         </div>
                     </div>
                 }
@@ -62,5 +62,7 @@
         </div>
     </div>
 </div>
+@*$@((Model.Price / 100M).ToString("0.00"))*@
+
 
 

@@ -28,6 +28,8 @@ namespace EduBrain
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                        "~/content/datatables/css/datatables.bootstrap.css",
+                        "~/Content/font-awesome.css",
+
                       "~/Content/site.css"));
         }
     }
