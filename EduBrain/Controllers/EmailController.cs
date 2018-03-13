@@ -50,7 +50,7 @@ namespace EduBrain.Controllers
             document.Add(new Paragraph("Hello World!"));
             document.Close();
 
-            MailMessage mm = new MailMessage("RafiBerger613@gmail.com", "RafiBerger613@gmail.com");
+            MailMessage mm = new MailMessage("", "");
             mm.Subject = "EduBrainz Email sender";
         
 
@@ -66,7 +66,7 @@ namespace EduBrain.Controllers
             smtp.Host = "smtp.gmail.com";
             smtp.Port = 587;
             smtp.EnableSsl = true;
-            NetworkCredential nc = new NetworkCredential("Rafiberger613@gmail.com", "Statistics24790");
+            NetworkCredential nc = new NetworkCredential("Rafiberger613@gmail.com", "");
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = nc;
             mm.Attachments.Add(new Attachment(@"C:\Users\Rafib\OneDrive\Documents\hello_world.pdf"));
