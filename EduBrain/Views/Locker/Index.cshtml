@@ -21,7 +21,7 @@
 }
 <div id="TableContainer">
 
-<table id="LockerTable" class="table table-bordered table-hover">
+<table id="example" class="table table-bordered table-hover">
     <thead>
         <tr>      
             <th>Locker Number</th>
@@ -31,6 +31,16 @@
     </thead>
     <tbody></tbody>
 </table>
+    <table id="LockerTable" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Locker Number</th>
+                <th>location </th>
+                <th> Student  </th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
     @*<table id="example" class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -68,9 +78,6 @@
             $(document).ready(function () {
              
                 $("#AvailableLockerTable").hide();
-    
-
-
 
                    var table = $("#AvailableLockerTable").DataTable({
                     ajax: {
@@ -110,11 +117,68 @@
                           },
                         {
                             "data": "student.firstName",
-                            "defaultContent": ""
+                            "defaultContent": "",
+                            "render": function (d, t, r) {
+                                if (r.student !== null) {
+                                    console.log(r.student.firstName + r.student.lastName);
+
+                                    return r.student.firstName + " " +  r.student.lastName;
+                                }
+                                else {
+
+                                    return "";
+                                }
+
+                                                      
+                              
+                            }
                         }
                     ]
                 });
             });
+            //$('#example').DataTable({
+            //    "ajax": {
+            //        "type": 'GET',
+            //        "dataType": 'json',
+            //        "url": '/api/lockers',
+            //        "data": null,
+            //        "defaultContent": "",
+            //        "data": {
+            //            "json": JSON.stringify(data)
+            //        },
+            //        "dataSrc": ""
+            //    },
+            //    columns: [{
+            //        "data": "lockernumber"
+            //    },
+            //      {
+            //          "data": "location"
+            //      },
+            //      {
+            //          "data": "student",
+            //          "render": function (d, t, r) {
+            //              //if (r.hasOwnProperty('student')) {
+            //                  var student = r.student;
+            //                  Console.log(r.student);
+            //                  var returnString = "";
+            //                  if ('NULL' !=  student.firstName ) {
+            //                      returnString = student.firstName;
+            //                  }
+            //                  if ('NULL' !=  student.firstNamestudent.lastName) {
+            //                      if (returnString.length) {
+            //                          returnString += " " + student.lastName;
+            //                      } else {
+            //                          returnString = student.lastName;
+            //                      }
+            //               //   }
+            //                  return returnString;
+            //              } else {
+            //                  return "Not assigned"
+            //             }
+            //       }
+             //     }
+          //      ]
+        //    });
 
 
 
