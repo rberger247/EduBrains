@@ -19,26 +19,50 @@
 </p>
 
 }
-
-
 <div id="TableContainer">
 
-<table id="LockerTable" class="table table-bordered table-hover">
+<table id="example" class="table table-bordered table-hover">
     <thead>
         <tr>      
             <th>Locker Number</th>
-            <th>Student Name</th>
+            <th>location </th>
+            <th> Student  </th> 
         </tr>
     </thead>
     <tbody></tbody>
 </table>
-  
+    <table id="LockerTable" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Locker Number</th>
+                <th>location </th>
+                <th> Student  </th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    @*<table id="example" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Locker Number</th>
+                <th>location </th>
+                <th> Student  </th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>*@
+
+
+
+
     <div id="available-container">
         <table id="AvailableLockerTable" class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th> Locker Number</th>
-                    <th> Student Name </th>        
+                    <th> Student Name </th> 
+                    <th> Student  </th> 
+                           
                 </tr>
             </thead>
             <tbody></tbody>
@@ -49,9 +73,12 @@
 {
         @Scripts.Render("~/bundles/jqueryval")
         <script>
+
+
             $(document).ready(function () {
              
-                $("#AvailableLockerTable").hide();              
+                $("#AvailableLockerTable").hide();
+
                    var table = $("#AvailableLockerTable").DataTable({
                     ajax: {
                         url: "/api/lockers/availableLocker",
@@ -60,13 +87,17 @@
                     },
                     columns: [ 
                         {
-                            "data": "lockerNumber",                         
+                            "data": "lockerNumber"                        
                         },
+                         {
+                             "data": "location"
+                         },
                        
                          {
                              "data": "student.firstName",
-                                "defaultContent": ""
+                             "defaultContent": "Not Assigned Yet"
                          }
+
                     ]
                    });
                    $("#AvailableLockerTable_wrapper").hide();
@@ -81,13 +112,76 @@
                         {
                             data: "lockerNumber"
                         },
+                          {
+                              data: "location"
+                          },
                         {
-                            data: "student.firstName",
-                            "defaultContent": ""
+                            "data": "student.firstName",
+                            "defaultContent": "",
+                            "render": function (d, t, r) {
+                                if (r.student !== null) {
+                                    console.log(r.student.firstName + r.student.lastName);
+
+                                    return r.student.firstName + " " +  r.student.lastName;
+                                }
+                                else {
+
+                                    return "";
+                                }
+
+                                                      
+                              
+                            }
                         }
                     ]
                 });
             });
+            //$('#example').DataTable({
+            //    "ajax": {
+            //        "type": 'GET',
+            //        "dataType": 'json',
+            //        "url": '/api/lockers',
+            //        "data": null,
+            //        "defaultContent": "",
+            //        "data": {
+            //            "json": JSON.stringify(data)
+            //        },
+            //        "dataSrc": ""
+            //    },
+            //    columns: [{
+            //        "data": "lockernumber"
+            //    },
+            //      {
+            //          "data": "location"
+            //      },
+            //      {
+            //          "data": "student",
+            //          "render": function (d, t, r) {
+            //              //if (r.hasOwnProperty('student')) {
+            //                  var student = r.student;
+            //                  Console.log(r.student);
+            //                  var returnString = "";
+            //                  if ('NULL' !=  student.firstName ) {
+            //                      returnString = student.firstName;
+            //                  }
+            //                  if ('NULL' !=  student.firstNamestudent.lastName) {
+            //                      if (returnString.length) {
+            //                          returnString += " " + student.lastName;
+            //                      } else {
+            //                          returnString = student.lastName;
+            //                      }
+            //               //   }
+            //                  return returnString;
+            //              } else {
+            //                  return "Not assigned"
+            //             }
+            //       }
+             //     }
+          //      ]
+        //    });
+
+
+
             $('#availableLocker').click(function () {
                 if (!this.checked)
                     $("#AvailableLockerTable_wrapper").hide(),
