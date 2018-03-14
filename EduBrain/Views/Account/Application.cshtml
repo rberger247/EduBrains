@@ -1,0 +1,186 @@
+﻿@using EduBrain.ViewModels
+@model AcceptanceLetterVm
+
+
+@*@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+@*<form class="needs-validation" novalidate>
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label for="validationcustom01"> father first name</label>
+            <input type="text" class="form-control" id="validationcustom01" placeholder="first name" value="" required>
+            <div class="valid-feedback">
+                looks good!
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="validationcustom02"> father last name</label>
+            <input type="text" class="form-control" id="validationcustom02" placeholder="last name" value="" required>
+            <div class="valid-feedback">
+                looks good!
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+                <label for="validationcustom01"> mother first name</label>
+                <input type="text" class="form-control" id="validationcustom01" placeholder="first name" value="mark" required>
+                <div class="valid-feedback">
+                    looks good!
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="validationcustom02"> mother last name</label>
+                <input type="text" class="form-control" id="validationcustom02" placeholder="last name" value="otto" required>
+                <div class="valid-feedback">
+                    looks good!
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="validationcustom03">city</label>
+                    <input type="text" class="form-control" id="validationcustom03" placeholder="city" required>
+                    <div class="invalid-feedback">
+                        please provide a valid city.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationcustom04">state</label>
+                    <input type="text" class="form-control" id="validationcustom04" placeholder="state" required>
+                    <div class="invalid-feedback">
+                        please provide a valid state.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationcustom05">zip</label>
+                    <input type="text" class="form-control" id="validationcustom05" placeholder="zip" required>
+                    <div class="invalid-feedback">
+                        please provide a valid zip.
+                    </div>
+                </div>
+            </div>
+
+</form>*@
+<br />
+<form class="container was-validated" novalidate="">
+    <div class="form-group">
+        <label class="form-control-label" for="inputSuccess1">Input with success</label>
+        <input type="text" class="form-control" name="i1" id="inputSuccess1">
+        <div class="valid-feedback">Success! You've done it.</div>
+    </div>
+    <div class="form-group">
+        <label class="form-control-label" for="inputSuccess2">Input with danger</label>
+        <input type="text" class="form-control" name="i2" required="" id="inputSuccess2">
+        <div class="invalid-feedback">That didn't work.</div>
+    </div>
+    <div class="">
+        <button type="submit" class="btn btn-secondary">Text</button>
+    </div>
+</form>
+
+@{
+    using (Html.BeginForm("Email", "Email", FormMethod.Post, new { enctype = "multipart/form", @class = "container was-validated", novalidate = "" }))
+    {      <div class="col-md-4 mb-3">
+               @Html.ValidationSummary(true)
+        @Html.LabelFor(m => m.FatherFirstName, new { @class = "control-label", @placeholder = "first name" })
+        @Html.TextBoxFor(m => m.FatherFirstName, new { @class = "form-control" })
+
+    </div>
+    <div class="col-md-4 mb-3">
+        @Html.LabelFor(m => m.LastName, new { @class = "control-label" }) <br />
+
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @required=" " })
+        
+</div>
+
+<div class="col-md-4 mb-3">
+    @Html.LabelFor(m => m.EmailAdress, new { @class = "control-label" }) <br />
+
+    @Html.TextBoxFor(m => m.EmailAdress, new { @class = "form-control", type = "email" , id="exampleInputEmail1" })
+
+</div>
+<div class="col-md-4 mb-3">
+    @Html.LabelFor(m => m.ChildFirstName, new { @class = "control-label" }) <br />
+
+    @Html.TextBoxFor(m => m.ChildFirstName, new { @class = "form-control" })
+
+</div>
+        var listItems = new List<SelectListItem>
+            {
+
+
+            new SelectListItem { Text = "Choose", Value="Choose" },
+            new SelectListItem { Text = "Kindergarten", Value="Kindergarten" },
+            new SelectListItem  { Text = "1st", Value="1st" },
+            new SelectListItem  { Text = "2nd", Value="2nd" },
+            new SelectListItem  { Text = "3rd", Value="3rd" },
+            new SelectListItem  { Text = "4th", Value="4th" },
+            new SelectListItem  { Text = "5th", Value="5th" },
+            };
+            <br />
+            <div class="col-md-4 mb-3">
+                @Html.LabelFor(m => m.SelectedGradeId) <br />
+                @Html.DropDownListFor(m => m.Grade, new SelectList(listItems, "Value", "Text"), new { @class = "custom-select d-block" })
+
+                <br />
+                <p><small>You should recieve an email at the address provided above upon the acceptance of your son.</small></p>
+             
+</div>
+                <input type="submit" value="Submit" class="btn btn-primary" />
+
+    }
+
+}
+
+
+
+
+                @*<div class="col-md-4 mb-md-5">
+                        <label for="validationCustomUsername"></label>
+                            Child  first Name
+                            <div class="input-group">
+
+                                </div>
+                                <input type="text" class="form-control" id="validationCustomUsername" placeholder="ChildName" aria-describedby="inputGroupPrepend" required>
+                            </div>
+                        <br />
+                    <br />
+
+                        <div class="form-group row col-md">
+                            <label for="example-datetime-local-input" class="col-2 col-form-label"> Child's Date of birth</label>
+                            <div class="col-10">
+                                <input class="form-control" type="datetime-local" value="" id="example-datetime-local-input">
+                            </div>
+                        </div>
+                    <p>
+                        <label for="grade_dropdown" class="col-3 col-form-label" value="">Grade Entering</label>
+                        <select  id="grade_dropdown" class="custom-select">
+                            <option selected>Choose a grade</option>
+                            <option value="1">Kindergarden</option>
+                            <option value="2">1st</option>
+                            <option value="3">2nd</option>
+                            <option value="3">3rd</option>
+                        </select>
+                    <br />
+                        </p>
+                    <p>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                    <label class="form-check-label" for="invalidCheck">
+                                        Agree to terms and conditions
+                                    </label>
+                                </div>
+                                </div>
+                                    </p>
+
+                                    <div class="invalid-feedback">
+                                        You must agree before submitting.
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Submit form</button>
+                        </div>*@
+
+

@@ -45,7 +45,6 @@ namespace EduBrain.Controllers.Api
             var availableLockerDto = availableLockers
                 .ToList()
                 .Select(Mapper.Map<Locker, LockerVm>);
-
             return Ok(availableLockerDto);
    
         }

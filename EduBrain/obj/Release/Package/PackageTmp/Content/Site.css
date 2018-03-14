@@ -22,3 +22,37 @@ select,
 textarea {
     max-width: 280px;
 }
+#NavBar-Index{
+
+    background-color:chartreuse;
+}
+body .modal {
+  width: 90%; /* desired relative width */
+  left: 5%; /* (100%-width)/2 */
+  /* place center */
+  margin-left:auto;
+  margin-right:auto; 
+}
+
+ #myModal{
+     width:200 px;
+        position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+ }
+ a.dropdown-item
+{
+
+     display: block;
+   
+    /* hides the link text */
+}
+ #navwrapper{
+     background-color: yellow;
+     margin-left: 5px;
+ }
+.navbar-nav > li{
+  padding-left:30px;
+  padding-right:30px;
+}
