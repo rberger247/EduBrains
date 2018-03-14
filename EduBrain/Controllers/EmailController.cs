@@ -91,7 +91,7 @@ namespace EduBrain.Controllers
             //smtp.Host = "smtp.gmail.com";
             //smtp.Port = 587;
             //smtp.EnableSsl = true;
-            //NetworkCredential nc = new NetworkCredential("Rafiberger613@gmail.com", "Statistics24790");
+            //NetworkCredential nc = new NetworkCredential("Rafiberger613@gmail.com", "");
             //smtp.UseDefaultCredentials = true;
             //smtp.Credentials = nc;
             //message.Attachments.Add(new Attachment(output.ToString()));
