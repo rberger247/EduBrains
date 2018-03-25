@@ -29,6 +29,35 @@
       <End Role="Student" EntitySet="Students" />
       <End Role="Locker" EntitySet="Lockers" />
     </AssociationSet>
+    <EntitySet Name="ApplicantFamilies" EntityType="EduSmart_dbModel.ApplicantFamily" />
+    <EntitySet Name="ApplicantFamilyMembers" EntityType="EduSmart_dbModel.ApplicantFamilyMember" />
+    <EntitySet Name="ApplicantParents" EntityType="EduSmart_dbModel.ApplicantParent" />
+    <EntitySet Name="ApplicantPersons" EntityType="EduSmart_dbModel.ApplicantPerson" />
+    <EntitySet Name="ApplicantStudents" EntityType="EduSmart_dbModel.ApplicantStudent" />
+    <EntitySet Name="Classes" EntityType="EduSmart_dbModel.Class" />
+    <EntitySet Name="FamilyMembers" EntityType="EduSmart_dbModel.FamilyMember" />
+    <EntitySet Name="Grades" EntityType="EduSmart_dbModel.Grade" />
+    <EntitySet Name="ScheduledClasses" EntityType="EduSmart_dbModel.ScheduledClass" />
+    <FunctionImport Name="sp_ApplicantFamily_SelectFamilyMembers" ReturnType="Collection(EduSmart_dbModel.sp_ApplicantFamily_SelectFamilyMembers_Result)">
+      <Parameter Name="Email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_ApplicantPerson_AddPerson">
+      <Parameter Name="ApplicantFatherId" Mode="InOut" Type="Int32" />
+      <Parameter Name="ApplicantchildId" Mode="InOut" Type="Int32" />
+      <Parameter Name="ApplicantFamilyId" Mode="InOut" Type="Int32" />
+      <Parameter Name="EmailAddress" Mode="In" Type="String" />
+      <Parameter Name="FatherFirstName" Mode="In" Type="String" />
+      <Parameter Name="gradeEntering" Mode="In" Type="String" />
+      <Parameter Name="FatherLastName" Mode="In" Type="String" />
+      <Parameter Name="ChildFirstName" Mode="In" Type="String" />
+      <Parameter Name="DateOfBirth" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="sp_ApplicantStudent_AddStudent">
+      <Parameter Name="ApplicantStudentId" Mode="InOut" Type="Int32" />
+      <Parameter Name="ApplicantPersonId" Mode="In" Type="Int32" />
+      <Parameter Name="FirstName" Mode="In" Type="String" />
+      <Parameter Name="Gender" Mode="In" Type="Byte" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Reciept">
     <Key>
@@ -145,6 +174,7 @@
     <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
   </EntityType>
   <Association Name="FK_Locker_Locker">
     <End Type="EduSmart_dbModel.Locker" Role="Locker" Multiplicity="1" />
@@ -168,6 +198,8 @@
     <Property Name="FamilyId" Type="Int32" />
     <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Lockers" Relationship="EduSmart_dbModel.FK_Locker_Student" FromRole="Student" ToRole="Locker" />
+    <Property Name="PersonId" Type="Int32" />
+    <Property Name="GradeEntering" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK_Locker_Student">
     <End Type="EduSmart_dbModel.Student" Role="Student" Multiplicity="0..1" />
@@ -181,4 +213,102 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="ApplicantFamily">
+    <Key>
+      <PropertyRef Name="FamilyId" />
+    </Key>
+    <Property Name="FamilyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ApplicantFatherId" Type="Int32" />
+    <Property Name="ApplicantMotherId" Type="Int32" />
+    <Property Name="ApplicantGuardianId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ApplicantFamilyMember">
+    <Key>
+      <PropertyRef Name="ApplicantFamilyMemberId" />
+    </Key>
+    <Property Name="ApplicantFamilyMemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ApplicantPersonId" Type="Int32" />
+    <Property Name="ApplicantStudentId" Type="Int32" />
+    <Property Name="FamilyId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ApplicantParent">
+    <Key>
+      <PropertyRef Name="ApplicantParentId" />
+    </Key>
+    <Property Name="ApplicantParentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ApplicantPerson">
+    <Key>
+      <PropertyRef Name="ApplicantPersonId" />
+    </Key>
+    <Property Name="ApplicantPersonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+    <Property Name="Gender" Type="Byte" />
+    <Property Name="DateApplied" Type="DateTime" Precision="3" />
+    <Property Name="FamilyId" Type="Int32" />
+    <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Title" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Job" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ApplicantStudent">
+    <Key>
+      <PropertyRef Name="ApplicantStudentId" />
+    </Key>
+    <Property Name="ApplicantStudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
+    <Property Name="ApplicantPersonId" Type="Int32" />
+    <Property Name="GradeEntering" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Class">
+    <Key>
+      <PropertyRef Name="ClassId" />
+    </Key>
+    <Property Name="ClassId" Type="Int32" Nullable="false" />
+    <Property Name="StudentId" Type="Int32" />
+    <Property Name="DateEnrolled" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="FamilyMember">
+    <Key>
+      <PropertyRef Name="FamilyMemberId" />
+    </Key>
+    <Property Name="FamilyMemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PersonId" Type="Int32" />
+    <Property Name="StudentId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Grade">
+    <Key>
+      <PropertyRef Name="GradeID" />
+    </Key>
+    <Property Name="GradeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Grade1" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+    <Property Name="ClassId" Type="Int32" Nullable="false" />
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <Property Name="DateModified" Type="DateTime" Precision="3" />
+    <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ScheduledClass">
+    <Key>
+      <PropertyRef Name="ScheduledClassId" />
+    </Key>
+    <Property Name="ScheduledClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StartTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EndTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Teacher" Type="Int32" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <ComplexType Name="sp_ApplicantFamily_SelectFamilyMembers_Result">
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="DateApplied" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DateOfBirth" Nullable="true" Precision="23" />
+    <Property Type="Byte" Name="Gender" Nullable="true" />
+    <Property Type="String" Name="GradeEntering" Nullable="true" MaxLength="20" />
+  </ComplexType>
 </Schema>

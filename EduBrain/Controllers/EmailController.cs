@@ -14,6 +14,10 @@ using EduBrain.ViewModels;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Data.SqlClient;
+using System.Data;
+using System.Data.Entity.Core.Objects;
+using Microsoft.AspNet.Identity;
 //using iTextSharp.text.pdf;
 //using iTextSharp.text;
 
@@ -26,19 +30,48 @@ namespace EduBrain.Controllers
 
         private EduSmart_dbEntities _db = new EduSmart_dbEntities();
         // GET: Email
+
+
         public ActionResult Index()
         {
+
             return View();
         }
 
-    [HttpPost]
-    public ActionResult Email(AcceptanceLetterVm acceptanceLetterVm)
-    {
+        [HttpPost]
+        public ActionResult Apply(ApplicantVm applicantVm)
+        {
             if (ModelState.IsValid)
             {
                 // do your stuff like: save to database and redirect to required page.
-                Student student = new Student();
-                Person person = new Person();        
+
+                //check for current user by email
+
+
+                //Set the output parameters
+                ObjectParameter studentId = new ObjectParameter("ApplicantStudentId", typeof(int));
+                ObjectParameter personId = new ObjectParameter("ApplicantStudentId", typeof(int));
+
+
+                ObjectParameter applicantFatherId = new ObjectParameter("ApplicantFatherId", typeof(int));
+                ObjectParameter applicantChildId = new ObjectParameter("ApplicantChildId", typeof(int));
+
+                ObjectParameter applicantFamilyId = new ObjectParameter("ApplicantFamilyId", typeof(int));
+
+                var date = DateTime.Today;
+
+
+                //Execute stored procedure to add Father To person table 
+                _db.sp_ApplicantPerson_AddPerson(applicantFatherId, applicantChildId, applicantFamilyId, User.Identity.Name,
+                    applicantVm.FatherFirstName, applicantVm.Grade, applicantVm.LastName,
+                 applicantVm.ChildFirstName, date);
+
+
+                //             _db.sp_ApplicantStudent_AddStudent(studentId, CreatedId, applicantVm.ChildFirstName, 1);
+
+                ApplicantParent applicantParent = new ApplicantParent();
+
+
             }
 
             var doc = new Document();
@@ -46,22 +79,25 @@ namespace EduBrain.Controllers
             PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
 
             doc.Open();
-            doc.Add(new Paragraph("Dear Mr " + acceptanceLetterVm.LastName + "," +
-                    " Congratulations on the acceptance of your son, " + acceptanceLetterVm.ChildFirstName + " into the " + acceptanceLetterVm.Grade + " grade" +
-                    " we are excited to have " + acceptanceLetterVm.ChildFirstName + " in our school"));
+            doc.Add(new Paragraph("Dear Mr " + applicantVm.LastName + "," +
+                    " Congratulations on the acceptance of your son, " + applicantVm.ChildFirstName + " into the " + applicantVm.Grade + " grade" +
+                    " we are excited to have " + applicantVm.ChildFirstName + " in our school"));
 
             writer.CloseStream = false;
             doc.Close();
             memoryStream.Position = 0;
 
-            MailMessage mm = new MailMessage("RafiBerger613@gmail.com", acceptanceLetterVm.EmailAdress)
+            MailMessage mm = new MailMessage("RafiBerger613@gmail.com", applicantVm.EmailAdress)
             {
                 Subject = " Congratulations on your childs acceptance into school",
-                IsBodyHtml = false,
-                Body = "Dear Mr " + acceptanceLetterVm.LastName + "," + 
-                    " Congratulations on the acceptance of your son, " + acceptanceLetterVm.ChildFirstName + " into the " + acceptanceLetterVm.Grade + " grade" +
-                    " we are excited to have " + acceptanceLetterVm.ChildFirstName +  " in our school"
+                IsBodyHtml = true,
+                Body = "Dear Mr " + applicantVm.LastName + "," + " <br/>" +
+                    " <b>Congratulations </B> on the acceptance of your son, " + applicantVm.ChildFirstName + " into the " +
+                 applicantVm.Grade + " grade." +
+                    " We are excited to have " + applicantVm.ChildFirstName + " in our school. Attached below is a letter with important information about the upcoming class"
             };
+
+
 
             mm.Attachments.Add(new Attachment(memoryStream, "AcceptanceLetter.pdf"));
             SmtpClient smtp = new SmtpClient
@@ -69,48 +105,21 @@ namespace EduBrain.Controllers
                 Host = "smtp.gmail.com",
                 Port = 587,
                 EnableSsl = true,
-                Credentials = new NetworkCredential("Rafiberger613@gmail.com", "")
+                Credentials = new NetworkCredential("Rafiberger613@gmail.com", "Google#400")
 
             };
 
+            // cc myself
+            MailAddress copy = new MailAddress("RafiBerger613@gmail.com");
+
+            mm.Bcc.Add(copy);
+
             smtp.Send(mm);
+            return RedirectToAction("ThankYou", "Application");
 
-
-            //MailMessage message = new MailMessage("RafiBerger613@gmail.com", "RafiBerger613@gmail.com");
-            //    message.Subject = "EduBrainz Email sender";
-
-
-
-
-            //    message.Body = ;
-
-
-
-            //message.IsBodyHtml = false;
-            //SmtpClient smtp = new SmtpClient();
-            //smtp.Host = "smtp.gmail.com";
-            //smtp.Port = 587;
-            //smtp.EnableSsl = true;
-            //NetworkCredential nc = new NetworkCredential("Rafiberger613@gmail.com", "");
-            //smtp.UseDefaultCredentials = true;
-            //smtp.Credentials = nc;
-            //message.Attachments.Add(new Attachment(output.ToString()));
-            //smtp.Send(message);
-
-            //doc.Close();
-
-            return View();
         }
-            // If we got this far, something failed, redisplay form
 
-            //    var writer = new PdfWriter(@"C:\Users\Rafib\OneDrive\Documents/hello_world.pdf");
-            //var pdf = new PdfDocument(writer);
-            //var document = new Document(pdf);
-            //document.Add(new Paragraph("Hello World!"));
-            //document.Close();
-
-            //ViewBag.Message = "mail Has been sent";
 
 
     }
-    }
+}

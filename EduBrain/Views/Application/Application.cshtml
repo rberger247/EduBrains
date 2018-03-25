@@ -1,0 +1,141 @@
+﻿@using EduBrain.ViewModels
+@model ApplicantVm
+
+
+@*@{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
+
+
+<br />
+
+
+
+
+<div id="accordion">
+
+    <div class="car">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" 
+                        aria-expanded="false" role="button" aria-controls="collapseOne">
+                    <span class="badge badge-success">4</span> &nbsp;  Registered Children for the current year 
+                   
+                </button>
+            </h5>
+        </div>
+        </div>
+
+
+        <div id="collapseOne" class="collapse "  aria-expanded="false" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <table>
+                    <thead>
+
+                    </thead>
+                    <tr>
+
+                        @*@foreach (var Child in Model)
+                        {
+                            <tr>
+                                <td>
+
+
+                                </td>
+
+
+
+                        }*@
+
+
+
+                    </tr>
+
+
+
+
+                </table>
+
+
+
+        
+            </div>
+        </div>
+    </div>
+        @{
+            using (Html.BeginForm("Apply", "Email", FormMethod.Post, new { enctype = "multipart/form", @class = "container was-validated", novalidate = "" }))
+            {
+                HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-md-4 mb-3 col">
+
+                        @Html.LabelFor(m => m.FatherFirstName, new { @class = "control-label", @placeholder = "first name" })
+                        @Html.TextBoxFor(m => m.FatherFirstName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.FatherFirstName, "", new { @class = "text-danger  " })
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(m => m.LastName, new { @class = "control-label" }) <br />
+
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger  " })
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    @Html.LabelFor(m => m.EmailAdress, new { @class = "control-label" }) <br />
+                    @*@Html.EditorFor(model => model.EmailAdress)*@
+
+                    @Html.TextBoxFor(m => m.EmailAdress, new { @class = "form-control", type = "email", id = "exampleInputEmail1" })
+                    @Html.ValidationMessageFor(m => m.EmailAdress, "", new { @class = "text-danger  " })
+
+                </div>
+
+                <div class="col-md-4 mb-3 col">
+
+                    @Html.LabelFor(m => m.ChildFirstName, new { @class = "control-label" }) <br />
+
+                    @Html.TextBoxFor(m => m.ChildFirstName, new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(m => m.ChildFirstName, "", new { @class = "text-danger  " })
+
+                </div>
+                var grades = new List<SelectListItem>
+        {
+        new SelectListItem { Text = "Choose", Value="Choose" },
+        new SelectListItem { Text = "Kindergarten", Value="Kindergarten" },
+        new SelectListItem  { Text = "1st", Value="1st" },
+        new SelectListItem  { Text = "2nd", Value="2nd" },
+        new SelectListItem  { Text = "3rd", Value="3rd" },
+        new SelectListItem  { Text = "4th", Value="4th" },
+        new SelectListItem  { Text = "5th", Value="5th" },
+        new SelectListItem  { Text = "6th", Value="6th" },
+        new SelectListItem  { Text = "7th", Value="7th" },
+        new SelectListItem  { Text = "8th", Value="8th" },
+        };
+
+                <div class="col-md-4 mb-3">
+                    @Html.LabelFor(m => m.SelectedGradeId) <br />
+                    @Html.DropDownListFor(m => m.Grade, new SelectList(grades, "Value", "Text"), new { @class = "custom-select d-block" })
+
+                    <br />
+                </div>
+                <p><small>You should recieve an email at the address provided above upon the acceptance of your son.</small></p>
+
+
+
+                @Html.AntiForgeryToken()<div class="">
+                    <input type="submit" value="Submit" class="btn btn-primary " />
+                    @*<input type="submit" value="Approve" class="btn btn-primary " />*@
+                </div>
+            }
+            @section scripts{
+
+                @Scripts.Render("~/bundles/jqueryval")
+
+            }
+
+        }
+
+
+

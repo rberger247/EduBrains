@@ -277,6 +277,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LockerController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ChildRegistrationController.cs" />
     <Compile Include="Controllers\SingleController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\WebExperienceProfilesController.cs" />
@@ -284,6 +285,21 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApplicantFamily.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicantFamilyMember.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicantParent.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicantPerson.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicantStudent.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>SchoolEntities.tt</DependentUpon>
     </Compile>
@@ -296,6 +312,15 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>SchoolEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Class.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FamilyMember.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Grade.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Locker.cs">
       <DependentUpon>SchoolEntities.tt</DependentUpon>
@@ -305,6 +330,9 @@
       <DependentUpon>SchoolEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Reciept.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ScheduledClass.cs">
       <DependentUpon>SchoolEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SchoolEntities.Context.cs">
@@ -322,6 +350,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SchoolEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_ApplicantFamily_SelectFamilyMembers_Result.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Student.cs">
       <DependentUpon>SchoolEntities.tt</DependentUpon>
     </Compile>
@@ -332,7 +363,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\AcceptanceLetterVm.cs" />
+    <Compile Include="ViewModels\ApplicantVm.cs" />
     <Compile Include="ViewModels\LockerVm.cs" />
     <Compile Include="ViewModels\Single\IndexVm.cs" />
     <Compile Include="ViewModels\StudentVm.cs" />
@@ -725,9 +756,11 @@
     <Content Include="Views\Email\Email.cshtml" />
     <Content Include="Views\Email\Index.cshtml" />
     <Content Include="Views\Account\Application.cshtml" />
+    <Content Include="Views\ChildRegistration\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\RegisterChild\" />
     <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>

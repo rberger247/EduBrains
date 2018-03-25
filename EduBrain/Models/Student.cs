@@ -25,6 +25,8 @@ namespace EduBrain.Models
         public string LastName { get; set; }
         public Nullable<int> FamilyId { get; set; }
         public Nullable<System.DateTime> EnrollmentDate { get; set; }
+        public Nullable<int> PersonId { get; set; }
+        public string GradeEntering { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Locker> Lockers { get; set; }

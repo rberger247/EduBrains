@@ -18,6 +18,15 @@
         <AssociationConnector Association="EduSmart_dbModel.FK_Locker_Locker" />
         <EntityTypeShape EntityType="EduSmart_dbModel.Student" Width="1.5" PointX="3.125" PointY="10" />
         <AssociationConnector Association="EduSmart_dbModel.FK_Locker_Student" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantFamily" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantFamilyMember" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantParent" Width="1.5" PointX="7.75" PointY="6.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantPerson" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantStudent" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.Class" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.FamilyMember" Width="1.5" PointX="9.75" PointY="7.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.Grade" Width="1.5" PointX="5.75" PointY="10.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.ScheduledClass" Width="1.5" PointX="7.75" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
