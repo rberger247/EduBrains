@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e9969749f6dd4968b68c689f86341b99" Name="Diagram1">
+      <Diagram DiagramId="e9969749f6dd4968b68c689f86341b99" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="EduSmart_dbModel.Reciept" Width="1.5" PointX="3.375" PointY="6.75" />
         <EntityTypeShape EntityType="EduSmart_dbModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" />
         <EntityTypeShape EntityType="EduSmart_dbModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" />
@@ -13,20 +13,16 @@
         <AssociationConnector Association="EduSmart_dbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="EduSmart_dbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="EduSmart_dbModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="EduSmart_dbModel.Locker" Width="1.5" PointX="5.375" PointY="6.75" />
-        <EntityTypeShape EntityType="EduSmart_dbModel.Person" Width="1.5" PointX="7.375" PointY="0.75" />
-        <AssociationConnector Association="EduSmart_dbModel.FK_Locker_Locker" />
-        <EntityTypeShape EntityType="EduSmart_dbModel.Student" Width="1.5" PointX="3.125" PointY="10" />
-        <AssociationConnector Association="EduSmart_dbModel.FK_Locker_Student" />
         <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantFamily" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantFamilyMember" Width="1.5" PointX="7.75" PointY="3.75" />
-        <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantParent" Width="1.5" PointX="7.75" PointY="6.75" />
-        <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantPerson" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantParent" Width="1.5" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantPerson" Width="2.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="EduSmart_dbModel.ApplicantStudent" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="EduSmart_dbModel.Class" Width="1.5" PointX="9.75" PointY="4.75" />
         <EntityTypeShape EntityType="EduSmart_dbModel.FamilyMember" Width="1.5" PointX="9.75" PointY="7.75" />
-        <EntityTypeShape EntityType="EduSmart_dbModel.Grade" Width="1.5" PointX="5.75" PointY="10.75" />
-        <EntityTypeShape EntityType="EduSmart_dbModel.ScheduledClass" Width="1.5" PointX="7.75" PointY="10.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.Grade" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.ScheduledClass" Width="1.5" PointX="7.375" PointY="10.75" />
+        <EntityTypeShape EntityType="EduSmart_dbModel.Student" Width="1.5" PointX="5.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

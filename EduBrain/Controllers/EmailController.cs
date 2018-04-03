@@ -64,7 +64,7 @@ namespace EduBrain.Controllers
                 //Execute stored procedure to add Father To person table 
                 _db.sp_ApplicantPerson_AddPerson(applicantFatherId, applicantChildId, applicantFamilyId, User.Identity.Name,
                     applicantVm.FatherFirstName, applicantVm.Grade, applicantVm.LastName,
-                 applicantVm.ChildFirstName, date);
+                 applicantVm.ChildFirstName, date, applicantVm.ChildGender);
 
 
                 //             _db.sp_ApplicantStudent_AddStudent(studentId, CreatedId, applicantVm.ChildFirstName, 1);

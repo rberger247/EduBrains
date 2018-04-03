@@ -17,9 +17,10 @@ namespace EduBrain.Models
         public int ScheduledClassId { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
-        public Nullable<int> Teacher { get; set; }
+        public Nullable<int> TeacherId { get; set; }
         public string Location { get; set; }
         public string Subject { get; set; }
         public string Title { get; set; }
+        public string GradeNumber { get; set; }
     }
 }

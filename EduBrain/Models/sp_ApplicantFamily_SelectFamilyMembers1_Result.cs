@@ -10,14 +10,13 @@
 namespace EduBrain.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Person
+    public partial class sp_ApplicantFamily_SelectFamilyMembers1_Result
     {
-        public string PersonId { get; set; }
         public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public Nullable<System.DateTime> DateApplied { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public Nullable<byte> Gender { get; set; }
+        public string GradeEntering { get; set; }
     }
 }

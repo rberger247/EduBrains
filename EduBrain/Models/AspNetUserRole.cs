@@ -12,17 +12,9 @@ namespace EduBrain.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Locker
+    public partial class AspNetUserRole
     {
-        public int LockerId { get; set; }
-        public string LockerNumber { get; set; }
-        public Nullable<int> StudentId { get; set; }
-        public System.DateTime DateAssigned { get; set; }
-        public string Location { get; set; }
-        public string CombinationNumber { get; set; }
-    
-        public virtual Locker Locker1 { get; set; }
-        public virtual Locker Locker2 { get; set; }
-        public virtual Student Student { get; set; }
+        public string UserId { get; set; }
+        public string RoleId { get; set; }
     }
 }

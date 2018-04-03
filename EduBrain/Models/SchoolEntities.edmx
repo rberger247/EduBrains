@@ -53,7 +53,7 @@
           <Property Name="ApplicantStudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EnrollmentDate" Type="datetime" />
           <Property Name="ApplicantPersonId" Type="int" />
-          <Property Name="GradeEntering" Type="varchar" MaxLength="20" />
+          <Property Name="GradeEntering" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -110,9 +110,10 @@
           <Key>
             <PropertyRef Name="ClassId" />
           </Key>
-          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentId" Type="int" />
           <Property Name="DateEnrolled" Type="datetime" />
+          <Property Name="ScheduledClassId" Type="int" />
         </EntityType>
         <EntityType Name="FamilyMembers">
           <Key>
@@ -135,27 +136,6 @@
           <Property Name="DateModified" Type="datetime" />
           <Property Name="Comments" Type="varchar" MaxLength="200" />
         </EntityType>
-        <EntityType Name="Locker">
-          <Key>
-            <PropertyRef Name="LockerId" />
-          </Key>
-          <Property Name="LockerId" Type="int" Nullable="false" />
-          <Property Name="LockerNumber" Type="varchar" MaxLength="50" />
-          <Property Name="StudentId" Type="int" />
-          <Property Name="DateAssigned" Type="datetime" Nullable="false" />
-          <Property Name="Location" Type="varchar" MaxLength="50" />
-          <Property Name="CombinationNumber" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Person">
-          <Key>
-            <PropertyRef Name="PersonId" />
-          </Key>
-          <Property Name="PersonId" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="DateOfBirth" Type="datetime" />
-        </EntityType>
         <EntityType Name="Reciept">
           <Key>
             <PropertyRef Name="PaymentId" />
@@ -175,10 +155,11 @@
           <Property Name="ScheduledClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StartTime" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="EndTime" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Teacher" Type="int" />
+          <Property Name="TeacherId" Type="int" />
           <Property Name="Location" Type="varchar" MaxLength="50" />
           <Property Name="Subject" Type="varchar" MaxLength="50" />
           <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="GradeNumber" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -217,58 +198,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetRoles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Locker_Locker">
-          <End Role="Locker" Type="Self.Locker" Multiplicity="1" />
-          <End Role="Locker1" Type="Self.Locker" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Locker">
-              <PropertyRef Name="LockerId" />
-            </Principal>
-            <Dependent Role="Locker1">
-              <PropertyRef Name="LockerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Locker_Student">
-          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
-          <End Role="Locker" Type="Self.Locker" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="Locker">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="sp_ApplicantFamily_SelectFamilyMembers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
@@ -282,12 +211,16 @@
           <Parameter Name="FatherLastName" Type="varchar" Mode="In" />
           <Parameter Name="ChildFirstName" Type="varchar" Mode="In" />
           <Parameter Name="DateOfBirth" Type="datetime" Mode="In" />
+          <Parameter Name="Gender" Type="tinyint" Mode="In" />
         </Function>
         <Function Name="sp_ApplicantStudent_AddStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ApplicantStudentId" Type="int" Mode="InOut" />
           <Parameter Name="ApplicantPersonId" Type="int" Mode="In" />
           <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
           <Parameter Name="Gender" Type="tinyint" Mode="In" />
+        </Function>
+        <Function Name="sp_SelectStudentInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="EduSmart_dbModelStoreContainer">
           <EntitySet Name="ApplicantFamily" EntityType="Self.ApplicantFamily" Schema="dbo" store:Type="Tables" />
@@ -303,8 +236,6 @@
           <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FamilyMembers" EntityType="Self.FamilyMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Locker" EntityType="Self.Locker" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reciept" EntityType="Self.Reciept" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ScheduledClass" EntityType="Self.ScheduledClass" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
@@ -315,22 +246,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Locker_Locker" Association="Self.FK_Locker_Locker">
-            <End Role="Locker" EntitySet="Locker" />
-            <End Role="Locker1" EntitySet="Locker" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Locker_Student" Association="Self.FK_Locker_Student">
-            <End Role="Student" EntitySet="Student" />
-            <End Role="Locker" EntitySet="Locker" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -355,17 +270,6 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="Lockers" EntityType="EduSmart_dbModel.Locker" />
-          <EntitySet Name="People" EntityType="EduSmart_dbModel.Person" />
-          <AssociationSet Name="FK_Locker_Locker" Association="EduSmart_dbModel.FK_Locker_Locker">
-            <End Role="Locker" EntitySet="Lockers" />
-            <End Role="Locker1" EntitySet="Lockers" />
-          </AssociationSet>
-          <EntitySet Name="Students" EntityType="EduSmart_dbModel.Student" />
-          <AssociationSet Name="FK_Locker_Student" Association="EduSmart_dbModel.FK_Locker_Student">
-            <End Role="Student" EntitySet="Students" />
-            <End Role="Locker" EntitySet="Lockers" />
-          </AssociationSet>
           <EntitySet Name="ApplicantFamilies" EntityType="EduSmart_dbModel.ApplicantFamily" />
           <EntitySet Name="ApplicantFamilyMembers" EntityType="EduSmart_dbModel.ApplicantFamilyMember" />
           <EntitySet Name="ApplicantParents" EntityType="EduSmart_dbModel.ApplicantParent" />
@@ -374,9 +278,8 @@
           <EntitySet Name="Classes" EntityType="EduSmart_dbModel.Class" />
           <EntitySet Name="FamilyMembers" EntityType="EduSmart_dbModel.FamilyMember" />
           <EntitySet Name="Grades" EntityType="EduSmart_dbModel.Grade" />
-          <EntitySet Name="ScheduledClasses" EntityType="EduSmart_dbModel.ScheduledClass" />
           <FunctionImport Name="sp_ApplicantFamily_SelectFamilyMembers" ReturnType="Collection(EduSmart_dbModel.sp_ApplicantFamily_SelectFamilyMembers_Result)">
-            <Parameter Name="Email" Mode="In" Type="String" />
+          <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_ApplicantPerson_AddPerson">
             <Parameter Name="ApplicantFatherId" Mode="InOut" Type="Int32" />
@@ -388,6 +291,7 @@
             <Parameter Name="FatherLastName" Mode="In" Type="String" />
             <Parameter Name="ChildFirstName" Mode="In" Type="String" />
             <Parameter Name="DateOfBirth" Mode="In" Type="DateTime" />
+            <Parameter Name="Gender" Mode="In" Type="Byte" />
           </FunctionImport>
           <FunctionImport Name="sp_ApplicantStudent_AddStudent">
             <Parameter Name="ApplicantStudentId" Mode="InOut" Type="Int32" />
@@ -395,6 +299,11 @@
             <Parameter Name="FirstName" Mode="In" Type="String" />
             <Parameter Name="Gender" Mode="In" Type="Byte" />
           </FunctionImport>
+          <FunctionImport Name="sp_SelectStudentInfo" ReturnType="Collection(Int32)">
+          <Parameter Name="StudentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="ScheduledClasses" EntityType="EduSmart_dbModel.ScheduledClass" />
+          <EntitySet Name="Students" EntityType="EduSmart_dbModel.Student" />
         </EntityContainer>
         <EntityType Name="Reciept">
           <Key>
@@ -489,67 +398,6 @@
           <End Type="EduSmart_dbModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="EduSmart_dbModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityType Name="Locker">
-          <Key>
-            <PropertyRef Name="LockerId" />
-          </Key>
-          <Property Name="LockerId" Type="Int32" Nullable="false" />
-          <Property Name="LockerNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="StudentId" Type="Int32" />
-          <Property Name="DateAssigned" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CombinationNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Locker1" Relationship="EduSmart_dbModel.FK_Locker_Locker" FromRole="Locker" ToRole="Locker1" />
-          <NavigationProperty Name="Locker2" Relationship="EduSmart_dbModel.FK_Locker_Locker" FromRole="Locker1" ToRole="Locker" />
-          <NavigationProperty Name="Student" Relationship="EduSmart_dbModel.FK_Locker_Student" FromRole="Locker" ToRole="Student" />
-        </EntityType>
-        <EntityType Name="Person">
-          <Key>
-            <PropertyRef Name="PersonId" />
-          </Key>
-          <Property Name="PersonId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
-        </EntityType>
-        <Association Name="FK_Locker_Locker">
-          <End Type="EduSmart_dbModel.Locker" Role="Locker" Multiplicity="1" />
-          <End Type="EduSmart_dbModel.Locker" Role="Locker1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Locker">
-              <PropertyRef Name="LockerId" />
-            </Principal>
-            <Dependent Role="Locker1">
-              <PropertyRef Name="LockerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Student">
-          <Key>
-            <PropertyRef Name="StudentId" />
-          </Key>
-          <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FamilyId" Type="Int32" />
-          <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Lockers" Relationship="EduSmart_dbModel.FK_Locker_Student" FromRole="Student" ToRole="Locker" />
-          <Property Name="PersonId" Type="Int32" />
-          <Property Name="GradeEntering" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK_Locker_Student">
-          <End Type="EduSmart_dbModel.Student" Role="Student" Multiplicity="0..1" />
-          <End Type="EduSmart_dbModel.Locker" Role="Locker" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="Locker">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ApplicantFamily">
           <Key>
             <PropertyRef Name="FamilyId" />
@@ -598,7 +446,7 @@
           <Property Name="ApplicantStudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
           <Property Name="ApplicantPersonId" Type="Int32" />
-          <Property Name="GradeEntering" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="GradeEntering" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -607,6 +455,7 @@
           <Property Name="ClassId" Type="Int32" Nullable="false" />
           <Property Name="StudentId" Type="Int32" />
           <Property Name="DateEnrolled" Type="DateTime" Precision="3" />
+          <Property Name="ScheduledClassId" Type="Int32" />
         </EntityType>
         <EntityType Name="FamilyMember">
           <Key>
@@ -629,18 +478,6 @@
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="ScheduledClass">
-          <Key>
-            <PropertyRef Name="ScheduledClassId" />
-          </Key>
-          <Property Name="ScheduledClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StartTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EndTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Teacher" Type="Int32" />
-          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <ComplexType Name="sp_ApplicantFamily_SelectFamilyMembers_Result">
           <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="DateApplied" Nullable="true" Precision="23" />
@@ -648,6 +485,28 @@
           <Property Type="Byte" Name="Gender" Nullable="true" />
           <Property Type="String" Name="GradeEntering" Nullable="true" MaxLength="20" />
         </ComplexType>
+        <EntityType Name="ScheduledClass">
+          <Key>
+            <PropertyRef Name="ScheduledClassId" />
+          </Key>
+          <Property Name="ScheduledClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EndTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TeacherId" Type="Int32" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GradeNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
+          <Property Name="PersonId" Type="Int32" />
+          <Property Name="GradeEntering" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -720,39 +579,6 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Lockers">
-            <EntityTypeMapping TypeName="EduSmart_dbModel.Locker">
-              <MappingFragment StoreEntitySet="Locker">
-                <ScalarProperty Name="CombinationNumber" ColumnName="CombinationNumber" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="DateAssigned" ColumnName="DateAssigned" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="LockerNumber" ColumnName="LockerNumber" />
-                <ScalarProperty Name="LockerId" ColumnName="LockerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="People">
-            <EntityTypeMapping TypeName="EduSmart_dbModel.Person">
-              <MappingFragment StoreEntitySet="Person">
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Students">
-            <EntityTypeMapping TypeName="EduSmart_dbModel.Student">
-              <MappingFragment StoreEntitySet="Student">
-                <ScalarProperty Name="GradeEntering" ColumnName="GradeEntering" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
-                <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ApplicantFamilies">
             <EntityTypeMapping TypeName="EduSmart_dbModel.ApplicantFamily">
               <MappingFragment StoreEntitySet="ApplicantFamily">
@@ -811,6 +637,7 @@
           <EntitySetMapping Name="Classes">
             <EntityTypeMapping TypeName="EduSmart_dbModel.Class">
               <MappingFragment StoreEntitySet="Class">
+                <ScalarProperty Name="ScheduledClassId" ColumnName="ScheduledClassId" />
                 <ScalarProperty Name="DateEnrolled" ColumnName="DateEnrolled" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="ClassId" ColumnName="ClassId" />
@@ -840,19 +667,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ScheduledClasses">
-            <EntityTypeMapping TypeName="EduSmart_dbModel.ScheduledClass">
-              <MappingFragment StoreEntitySet="ScheduledClass">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="ScheduledClassId" ColumnName="ScheduledClassId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_ApplicantFamily_SelectFamilyMembers" FunctionName="EduSmart_dbModel.Store.sp_ApplicantFamily_SelectFamilyMembers">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EduSmart_dbModel.sp_ApplicantFamily_SelectFamilyMembers_Result">
@@ -866,6 +680,31 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_ApplicantPerson_AddPerson" FunctionName="EduSmart_dbModel.Store.sp_ApplicantPerson_AddPerson" />
           <FunctionImportMapping FunctionImportName="sp_ApplicantStudent_AddStudent" FunctionName="EduSmart_dbModel.Store.sp_ApplicantStudent_AddStudent" />
+          <FunctionImportMapping FunctionImportName="sp_SelectStudentInfo" FunctionName="EduSmart_dbModel.Store.sp_SelectStudentInfo" />
+          <EntitySetMapping Name="ScheduledClasses">
+            <EntityTypeMapping TypeName="EduSmart_dbModel.ScheduledClass">
+              <MappingFragment StoreEntitySet="ScheduledClass">
+                <ScalarProperty Name="GradeNumber" ColumnName="GradeNumber" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="ScheduledClassId" ColumnName="ScheduledClassId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="EduSmart_dbModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="GradeEntering" ColumnName="GradeEntering" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

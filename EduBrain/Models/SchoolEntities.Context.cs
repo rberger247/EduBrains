@@ -32,9 +32,6 @@ namespace EduBrain.Models
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<Locker> Lockers { get; set; }
-        public virtual DbSet<Person> People { get; set; }
-        public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<ApplicantFamily> ApplicantFamilies { get; set; }
         public virtual DbSet<ApplicantFamilyMember> ApplicantFamilyMembers { get; set; }
         public virtual DbSet<ApplicantParent> ApplicantParents { get; set; }
@@ -44,6 +41,7 @@ namespace EduBrain.Models
         public virtual DbSet<FamilyMember> FamilyMembers { get; set; }
         public virtual DbSet<Grade> Grades { get; set; }
         public virtual DbSet<ScheduledClass> ScheduledClasses { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
     
         public virtual ObjectResult<sp_ApplicantFamily_SelectFamilyMembers_Result> sp_ApplicantFamily_SelectFamilyMembers(string email)
         {
@@ -54,7 +52,7 @@ namespace EduBrain.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ApplicantFamily_SelectFamilyMembers_Result>("sp_ApplicantFamily_SelectFamilyMembers", emailParameter);
         }
     
-        public virtual int sp_ApplicantPerson_AddPerson(ObjectParameter applicantFatherId, ObjectParameter applicantchildId, ObjectParameter applicantFamilyId, string emailAddress, string fatherFirstName, string gradeEntering, string fatherLastName, string childFirstName, Nullable<System.DateTime> dateOfBirth)
+        public virtual int sp_ApplicantPerson_AddPerson(ObjectParameter applicantFatherId, ObjectParameter applicantchildId, ObjectParameter applicantFamilyId, string emailAddress, string fatherFirstName, string gradeEntering, string fatherLastName, string childFirstName, Nullable<System.DateTime> dateOfBirth, Nullable<byte> gender)
         {
             var emailAddressParameter = emailAddress != null ?
                 new ObjectParameter("EmailAddress", emailAddress) :
@@ -80,7 +78,11 @@ namespace EduBrain.Models
                 new ObjectParameter("DateOfBirth", dateOfBirth) :
                 new ObjectParameter("DateOfBirth", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ApplicantPerson_AddPerson", applicantFatherId, applicantchildId, applicantFamilyId, emailAddressParameter, fatherFirstNameParameter, gradeEnteringParameter, fatherLastNameParameter, childFirstNameParameter, dateOfBirthParameter);
+            var genderParameter = gender.HasValue ?
+                new ObjectParameter("Gender", gender) :
+                new ObjectParameter("Gender", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ApplicantPerson_AddPerson", applicantFatherId, applicantchildId, applicantFamilyId, emailAddressParameter, fatherFirstNameParameter, gradeEnteringParameter, fatherLastNameParameter, childFirstNameParameter, dateOfBirthParameter, genderParameter);
         }
     
         public virtual int sp_ApplicantStudent_AddStudent(ObjectParameter applicantStudentId, Nullable<int> applicantPersonId, string firstName, Nullable<byte> gender)
@@ -98,6 +100,15 @@ namespace EduBrain.Models
                 new ObjectParameter("Gender", typeof(byte));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ApplicantStudent_AddStudent", applicantStudentId, applicantPersonIdParameter, firstNameParameter, genderParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_SelectStudentInfo(Nullable<int> studentId)
+        {
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_SelectStudentInfo", studentIdParameter);
         }
     }
 }

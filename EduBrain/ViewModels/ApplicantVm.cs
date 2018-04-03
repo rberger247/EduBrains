@@ -27,6 +27,11 @@ namespace EduBrain.ViewModels
         [Display(Name = "Child's First Name")]
         [Required]
         public string  ChildFirstName { get; set; }
+
+
+        [Display(Name = "Child Gender")]
+
+        public byte? ChildGender { get; set; }
         public string Grade { get; set; }
         [Display(Name = "Grade Entering")]
         public int SelectedGradeId { get; set; }

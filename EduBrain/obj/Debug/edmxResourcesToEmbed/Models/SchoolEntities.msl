@@ -67,39 +67,6 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="Lockers">
-      <EntityTypeMapping TypeName="EduSmart_dbModel.Locker">
-        <MappingFragment StoreEntitySet="Locker">
-          <ScalarProperty Name="CombinationNumber" ColumnName="CombinationNumber" />
-          <ScalarProperty Name="Location" ColumnName="Location" />
-          <ScalarProperty Name="DateAssigned" ColumnName="DateAssigned" />
-          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-          <ScalarProperty Name="LockerNumber" ColumnName="LockerNumber" />
-          <ScalarProperty Name="LockerId" ColumnName="LockerId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="People">
-      <EntityTypeMapping TypeName="EduSmart_dbModel.Person">
-        <MappingFragment StoreEntitySet="Person">
-          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Students">
-      <EntityTypeMapping TypeName="EduSmart_dbModel.Student">
-        <MappingFragment StoreEntitySet="Student">
-          <ScalarProperty Name="GradeEntering" ColumnName="GradeEntering" />
-          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
-          <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
-          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ApplicantFamilies">
       <EntityTypeMapping TypeName="EduSmart_dbModel.ApplicantFamily">
         <MappingFragment StoreEntitySet="ApplicantFamily">
@@ -158,6 +125,7 @@
     <EntitySetMapping Name="Classes">
       <EntityTypeMapping TypeName="EduSmart_dbModel.Class">
         <MappingFragment StoreEntitySet="Class">
+          <ScalarProperty Name="ScheduledClassId" ColumnName="ScheduledClassId" />
           <ScalarProperty Name="DateEnrolled" ColumnName="DateEnrolled" />
           <ScalarProperty Name="StudentId" ColumnName="StudentId" />
           <ScalarProperty Name="ClassId" ColumnName="ClassId" />
@@ -187,19 +155,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ScheduledClasses">
-      <EntityTypeMapping TypeName="EduSmart_dbModel.ScheduledClass">
-        <MappingFragment StoreEntitySet="ScheduledClass">
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Subject" ColumnName="Subject" />
-          <ScalarProperty Name="Location" ColumnName="Location" />
-          <ScalarProperty Name="Teacher" ColumnName="Teacher" />
-          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-          <ScalarProperty Name="ScheduledClassId" ColumnName="ScheduledClassId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_ApplicantFamily_SelectFamilyMembers" FunctionName="EduSmart_dbModel.Store.sp_ApplicantFamily_SelectFamilyMembers">
       <ResultMapping>
         <ComplexTypeMapping TypeName="EduSmart_dbModel.sp_ApplicantFamily_SelectFamilyMembers_Result">
@@ -213,5 +168,30 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_ApplicantPerson_AddPerson" FunctionName="EduSmart_dbModel.Store.sp_ApplicantPerson_AddPerson" />
     <FunctionImportMapping FunctionImportName="sp_ApplicantStudent_AddStudent" FunctionName="EduSmart_dbModel.Store.sp_ApplicantStudent_AddStudent" />
+    <FunctionImportMapping FunctionImportName="sp_SelectStudentInfo" FunctionName="EduSmart_dbModel.Store.sp_SelectStudentInfo" />
+    <EntitySetMapping Name="ScheduledClasses">
+      <EntityTypeMapping TypeName="EduSmart_dbModel.ScheduledClass">
+        <MappingFragment StoreEntitySet="ScheduledClass">
+          <ScalarProperty Name="GradeNumber" ColumnName="GradeNumber" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="ScheduledClassId" ColumnName="ScheduledClassId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="EduSmart_dbModel.Student">
+        <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="GradeEntering" ColumnName="GradeEntering" />
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+          <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

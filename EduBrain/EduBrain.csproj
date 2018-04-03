@@ -322,13 +322,7 @@
       <DependentUpon>SchoolEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Locker.cs">
-      <DependentUpon>SchoolEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Person.cs">
-      <DependentUpon>SchoolEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Reciept.cs">
       <DependentUpon>SchoolEntities.tt</DependentUpon>
     </Compile>

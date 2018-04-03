@@ -17,5 +17,6 @@ namespace EduBrain.Models
         public int ClassId { get; set; }
         public Nullable<int> StudentId { get; set; }
         public Nullable<System.DateTime> DateEnrolled { get; set; }
+        public Nullable<int> ScheduledClassId { get; set; }
     }
 }

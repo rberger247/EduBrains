@@ -13,14 +13,14 @@ namespace EduBrain.App_Start
 
         public MappingProfile()
         {
-            Mapper.CreateMap<Student, StudentVm>();
-            Mapper.CreateMap<Locker, LockerVm>();
+            //Mapper.CreateMap<Student, StudentVm>();
+            //Mapper.CreateMap<Locker, LockerVm>();
 
 
-            Mapper.CreateMap<StudentVm, Student>()
-            .ForMember(c => c.StudentId, opt => opt.Ignore());
-            Mapper.CreateMap<LockerVm, Locker>()
-            .ForMember(c => c.StudentId, opt => opt.Ignore());
+            //Mapper.CreateMap<StudentVm, Student>()
+            //.ForMember(c => c.StudentId, opt => opt.Ignore());
+            //Mapper.CreateMap<LockerVm, Locker>()
+            //.ForMember(c => c.StudentId, opt => opt.Ignore());
         }
     }
 }
