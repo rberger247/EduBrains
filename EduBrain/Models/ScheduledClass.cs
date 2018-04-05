@@ -12,11 +12,15 @@ namespace EduBrain.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Student
+    public partial class ScheduledClass
     {
-        public int StudentId { get; set; }
-        public Nullable<System.DateTime> EnrollmentDate { get; set; }
-        public Nullable<int> PersonId { get; set; }
-        public string GradeEntering { get; set; }
+        public int ScheduledClassId { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+        public Nullable<int> TeacherId { get; set; }
+        public string Location { get; set; }
+        public string Subject { get; set; }
+        public string Title { get; set; }
+        public string GradeNumber { get; set; }
     }
 }

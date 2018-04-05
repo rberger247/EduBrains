@@ -124,7 +124,6 @@ C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBra
 C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\obj\Debug\EduBrain.dll
 C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\obj\Debug\EduBrain.pdb
-C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\obj\Debug\EduBrain.csprojResolveAssemblyReference.cache
 C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\bin\itextsharp.dll
 C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\bin\itextsharp.xml
 C:\Users\Rafib\onedrive\documents\visual studio 2015\Projects\EduBrainSln\EduBrain\bin\BouncyCastle.Crypto.dll
