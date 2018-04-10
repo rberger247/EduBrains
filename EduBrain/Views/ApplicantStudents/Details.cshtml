@@ -1,0 +1,42 @@
+﻿@model EduBrain.Models.ApplicantStudent
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ApplicantStudent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EnrollmentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnrollmentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicantPersonId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicantPersonId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GradeEntering)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GradeEntering)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ApplicantStudentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
