@@ -42,6 +42,7 @@ namespace EduBrain.Models
         public virtual DbSet<Grade> Grades { get; set; }
         public virtual DbSet<ScheduledClass> ScheduledClasses { get; set; }
         public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<Person> People { get; set; }
     
         public virtual ObjectResult<sp_ApplicantFamily_SelectFamilyMembers_Result> sp_ApplicantFamily_SelectFamilyMembers(string email)
         {
@@ -109,6 +110,24 @@ namespace EduBrain.Models
                 new ObjectParameter("StudentId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_SelectStudentInfo", studentIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_SelectStudents_Result> sp_SelectStudents(Nullable<int> teacherId)
+        {
+            var teacherIdParameter = teacherId.HasValue ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_SelectStudents_Result>("sp_SelectStudents", teacherIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_SelectTeacherClasses_Result> sp_SelectTeacherClasses(Nullable<int> teacherId)
+        {
+            var teacherIdParameter = teacherId.HasValue ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_SelectTeacherClasses_Result>("sp_SelectTeacherClasses", teacherIdParameter);
         }
     }
 }

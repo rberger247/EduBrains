@@ -52,6 +52,13 @@
     </FunctionImport>
     <EntitySet Name="ScheduledClasses" EntityType="EduSmart_dbModel.ScheduledClass" />
     <EntitySet Name="Students" EntityType="EduSmart_dbModel.Student" />
+    <EntitySet Name="People" EntityType="EduSmart_dbModel.Person" />
+    <FunctionImport Name="sp_SelectStudents" ReturnType="Collection(EduSmart_dbModel.sp_SelectStudents_Result)">
+      <Parameter Name="TeacherId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_SelectTeacherClasses" ReturnType="Collection(EduSmart_dbModel.sp_SelectTeacherClasses_Result)">
+      <Parameter Name="TeacherId" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Reciept">
     <Key>
@@ -255,4 +262,29 @@
     <Property Name="PersonId" Type="Int32" />
     <Property Name="GradeEntering" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="PersonId" />
+    </Key>
+    <Property Name="PersonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+    <Property Name="Gender" Type="Byte" />
+    <Property Name="DateApplied" Type="DateTime" Precision="3" />
+    <Property Name="FamilyId" Type="Int32" />
+    <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Title" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Job" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <ComplexType Name="sp_SelectStudents_Result">
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="GradeEntering" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="sp_SelectTeacherClasses_Result">
+    <Property Type="String" Name="StartTime" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="EndTime" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Title" Nullable="true" MaxLength="50" />
+  </ComplexType>
 </Schema>

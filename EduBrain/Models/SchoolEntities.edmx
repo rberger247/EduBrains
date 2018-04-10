@@ -136,6 +136,21 @@
           <Property Name="DateModified" Type="datetime" />
           <Property Name="Comments" Type="varchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="Gender" Type="tinyint" />
+          <Property Name="DateApplied" Type="datetime" />
+          <Property Name="FamilyId" Type="int" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="50" />
+          <Property Name="Title" Type="varchar" MaxLength="10" />
+          <Property Name="Job" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Reciept">
           <Key>
             <PropertyRef Name="PaymentId" />
@@ -170,6 +185,13 @@
           <Property Name="PersonId" Type="int" />
           <Property Name="GradeEntering" Type="varchar" MaxLength="20" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'EduSmart_db.dbo.vw_SelectStudentInfo' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="vw_SelectStudentInfo">
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="GradeEntering" Type="varchar" MaxLength="20" />
+        </EntityType>-->
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -222,6 +244,12 @@
         <Function Name="sp_SelectStudentInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StudentId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_SelectStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TeacherId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_SelectTeacherClasses" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TeacherId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="EduSmart_dbModelStoreContainer">
           <EntitySet Name="ApplicantFamily" EntityType="Self.ApplicantFamily" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicantFamilyMembers" EntityType="Self.ApplicantFamilyMembers" Schema="dbo" store:Type="Tables" />
@@ -236,6 +264,7 @@
           <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FamilyMembers" EntityType="Self.FamilyMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reciept" EntityType="Self.Reciept" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ScheduledClass" EntityType="Self.ScheduledClass" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
@@ -304,6 +333,13 @@
           </FunctionImport>
           <EntitySet Name="ScheduledClasses" EntityType="EduSmart_dbModel.ScheduledClass" />
           <EntitySet Name="Students" EntityType="EduSmart_dbModel.Student" />
+          <EntitySet Name="People" EntityType="EduSmart_dbModel.Person" />
+          <FunctionImport Name="sp_SelectStudents" ReturnType="Collection(EduSmart_dbModel.sp_SelectStudents_Result)">
+            <Parameter Name="TeacherId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_SelectTeacherClasses" ReturnType="Collection(EduSmart_dbModel.sp_SelectTeacherClasses_Result)">
+            <Parameter Name="TeacherId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Reciept">
           <Key>
@@ -507,6 +543,31 @@
           <Property Name="PersonId" Type="Int32" />
           <Property Name="GradeEntering" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="Gender" Type="Byte" />
+          <Property Name="DateApplied" Type="DateTime" Precision="3" />
+          <Property Name="FamilyId" Type="Int32" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Job" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="sp_SelectStudents_Result">
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="GradeEntering" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="sp_SelectTeacherClasses_Result">
+          <Property Type="String" Name="StartTime" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EndTime" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -705,6 +766,40 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="EduSmart_dbModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Job" ColumnName="Job" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="FamilyId" ColumnName="FamilyId" />
+                <ScalarProperty Name="DateApplied" ColumnName="DateApplied" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_SelectStudents" FunctionName="EduSmart_dbModel.Store.sp_SelectStudents">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EduSmart_dbModel.sp_SelectStudents_Result">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="GradeEntering" ColumnName="GradeEntering" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_SelectTeacherClasses" FunctionName="EduSmart_dbModel.Store.sp_SelectTeacherClasses">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EduSmart_dbModel.sp_SelectTeacherClasses_Result">
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

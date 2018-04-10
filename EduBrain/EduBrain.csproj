@@ -324,6 +324,9 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Person.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Reciept.cs">
       <DependentUpon>SchoolEntities.tt</DependentUpon>
     </Compile>
@@ -346,6 +349,12 @@
       <DependentUpon>SchoolEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_ApplicantFamily_SelectFamilyMembers_Result.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_SelectStudents_Result.cs">
+      <DependentUpon>SchoolEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_SelectTeacherClasses_Result.cs">
       <DependentUpon>SchoolEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Student.cs">

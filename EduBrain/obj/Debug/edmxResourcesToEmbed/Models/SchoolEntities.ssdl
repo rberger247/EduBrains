@@ -131,6 +131,21 @@
     <Property Name="DateModified" Type="datetime" />
     <Property Name="Comments" Type="varchar" MaxLength="200" />
   </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="PersonId" />
+    </Key>
+    <Property Name="PersonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="Gender" Type="tinyint" />
+    <Property Name="DateApplied" Type="datetime" />
+    <Property Name="FamilyId" Type="int" />
+    <Property Name="EmailAddress" Type="varchar" MaxLength="50" />
+    <Property Name="Title" Type="varchar" MaxLength="10" />
+    <Property Name="Job" Type="varchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Reciept">
     <Key>
       <PropertyRef Name="PaymentId" />
@@ -165,6 +180,13 @@
     <Property Name="PersonId" Type="int" />
     <Property Name="GradeEntering" Type="varchar" MaxLength="20" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'EduSmart_db.dbo.vw_SelectStudentInfo' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="vw_SelectStudentInfo">
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="GradeEntering" Type="varchar" MaxLength="20" />
+        </EntityType>-->
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -217,6 +239,12 @@
   <Function Name="sp_SelectStudentInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="StudentId" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_SelectStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TeacherId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_SelectTeacherClasses" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TeacherId" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="EduSmart_dbModelStoreContainer">
     <EntitySet Name="ApplicantFamily" EntityType="Self.ApplicantFamily" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ApplicantFamilyMembers" EntityType="Self.ApplicantFamilyMembers" Schema="dbo" store:Type="Tables" />
@@ -231,6 +259,7 @@
     <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FamilyMembers" EntityType="Self.FamilyMembers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reciept" EntityType="Self.Reciept" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ScheduledClass" EntityType="Self.ScheduledClass" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
